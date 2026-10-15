@@ -2,7 +2,14 @@
 
 A single-page microphone processing chain you can test in Safari. Record a take, then flip between **A (dry)** and **B (processed)** while it loops. The switch is instant and playback never stops.
 
-The first module is a **personal EQ** with 8 bands: high-pass, low shelf, four bells, high shelf and low-pass. Every band can be set to any type.
+The chain is **Personal EQ → Compressor → Saturation → Reverb**. The EQ has 8 bands, and every band can be set to any type. The other three are simple starter effects.
+
+The layout is three parts:
+- **Top bar:** Arm, Play and Pause, the timer, and the A/B switch with small level meters.
+- **Middle:** one window per stage. Swipe or scroll sideways between them.
+- **Bottom bar:** the chain itself. Tap an effect to jump to its window, tap its power button to turn it on or off, and use ‹ › to move it earlier or later in the chain.
+
+The compressor's 6 ms look-ahead is measured, and the dry side is delayed by the same amount, so A and B stay sample-aligned.
 
 ## Run it
 
@@ -39,4 +46,4 @@ The mic is captured raw: echo cancellation, noise suppression and auto gain are 
 
 ## Adding modules
 
-`buildChain()` in `index.html` builds the chain from modules. New modules (compressor, de-esser, saturation…) go there, and they run in both the live chain and the offline render used for export and loudness matching.
+Effects are listed in `MODS` in `index.html`, and their audio code lives next to `buildChain()`. A new effect needs an entry in `MODS` (name, color and parameter list, from which its window is generated) and a core function that `buildChain()` wraps. Each effect runs in both the live chain and the offline render used for export and loudness matching.
